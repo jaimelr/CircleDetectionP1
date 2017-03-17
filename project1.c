@@ -9,6 +9,10 @@
 #define UPPER_SPEED 1.0
 #define LOWER_SPEED -1.0
 
+
+//Holi jaime!!!!!!!!!
+//                             >_<
+
 /* La PARTICLE debia estar dividida en tres partes ESTRUCTURA DE LA PARTICLE
  * 1.-posición
  * 2.-Velocidad
