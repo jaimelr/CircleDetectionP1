@@ -8,10 +8,7 @@
 #define ITERATION_LIMIT 250 //100
 #define UPPER_SPEED 1.0
 #define LOWER_SPEED -1.0
-
-
-//Holi jaime!!!!!!!!!
-//                             >_<
+#include "funciones.h"
 
 /* La PARTICLE debia estar dividida en tres partes ESTRUCTURA DE LA PARTICLE
  * 1.-posición
@@ -24,6 +21,8 @@
  */
 
 /* Definición de la estructura SwarmAMBRE */
+
+
 typedef struct {
 	float* Xi; // Posicion
 	float* Vi; // Velocidad
@@ -58,6 +57,14 @@ void UpdateBest(SWARM *pSwarm);
 
 int main()
 {
+  // variables para las funciones de procesamieto de imagenes   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
+  gcIMG *Img1;
+  unsigned int i;
+  float T,r=20;
+  int x,y;
+  
+  //resto de las variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  
 	SWARM *example;
 	unsigned int j;
 	unsigned int limit;
@@ -66,11 +73,11 @@ int main()
 
 	example = CreateSwarm(PARTICLES_NUMBER, PARAMS_NUMBER);
 	SetupSWARM(example, LOW_LIMIT, HIGH_LIMIT, 2, 2, LOWER_SPEED, UPPER_SPEED);
-	ShowSWARM(example);
+//	ShowSWARM(example);
 	EvaluateSWARM(example);
 	printf("\n");
 	EvaluateSWARM(example);
-	ShowSWARM(example);
+//	ShowSWARM(example);
 	SetupBest(example);
 	printf("\n Best = %u", example->idGbest);
 
@@ -80,13 +87,41 @@ int main()
 		UpdatePosition(example);
 		EvaluateSWARM(example);
 		UpdateBest(example);
-		ShowSWARM(example);
+		
 		printf("\nIteracion: %d\t", j);
 		j++;
 	}
+	ShowSWARM(example);
 	printf("\n Best = %u", example->idGbest);
 
 	FreeSWARM(example);
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	//parte del procesamiento de imagenes en main>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
+	Img1=gcNewImg(256,256);
+  
+   for(i=0; i<256; i++)
+    for(j=0;j<256; j++)
+        Img1->imx[i*Img1->ancho+j]=255;
+        
+        
+        
+    for(T=0;T<360;T+=.5)
+    {
+    x=r*(cos(T))+128;
+    y=r*(sin(T))+128;
+    Img1->imx[x*Img1->ancho+y]=0;
+    
+	}
+	
+	
+	gcPutImgBmp("Ejemplo.bmp",Img1);
+  //Libera la Imagen utilizada
+  gcFreeImg(Img1);
+  
+  ////////////////////////////////////////////////////////
+  //termina parte de procesamiento de imagenes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<
 	return 0;
 }
 
@@ -257,11 +292,12 @@ void UpdatePosition(SWARM *pSwarm) {
 void UpdateBest(SWARM *pSwarm) {
 	unsigned int i;
 	float best;
+	int j ;
 	best = pSwarm->Swarm[pSwarm->idGbest].PFit;
 
 	for(i=0; i < pSwarm->nParticles; i++) {
 		if(pSwarm->Swarm[i].XFit > pSwarm->Swarm[i].PFit) {
-			for(int j = 0; j < pSwarm->nParams; j++) {
+			for(j = 0; j < pSwarm->nParams; j++) {
 				pSwarm->Swarm[i].Pi[j] = pSwarm->Swarm[i].Xi[j];
 				pSwarm->Swarm[i].PFit = pSwarm->Swarm[i].XFit;
 			}
