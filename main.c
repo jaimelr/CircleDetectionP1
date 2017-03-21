@@ -7,32 +7,20 @@ int main(void)
 	unsigned int i,j;
 	unsigned int width,height;
 	unsigned int k=0;
-	gcIMG *Img1;
+	gcIMG *img1;
 	PIXEL *vector;
 
-	Img1=gcGetImgBmp("imag_circle_4.bmp");
-	height=Img1->alto;
-	width=Img1->ancho;
+	img1 = gcGetImgBmp("imag_circle_4.bmp");
+	height = img1->alto;
+	width = img1->ancho;
 
 	vector = (PIXEL*)malloc(height*width*sizeof(PIXEL));
+	vector = GetColoredPixels(img1);
 
-	//Barrer imagen buscando puntos negros
-	for(i=0; i<height; i++)
-	{
-		for(j=0;j<width; j++)
-		{
-			if(Img1->imx[i*Img1->ancho+j] == 0)
-			{
-				vector[k].x = j;
-				vector[k].y = height-i;
-				printf("\n\nX=%d\ty=%d", vector[k].x, vector[k].y);
-				k++;
-			}
-		}
-	}
+
 
 	//Libera la Imagen utilizada
 	free(vector);
-	gcFreeImg(Img1);
+	gcFreeImg(img1);
 	return 0;
 }
