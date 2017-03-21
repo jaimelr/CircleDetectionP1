@@ -1,40 +1,38 @@
-
 #include "PDI.h"
-#include "figura.h"
+#include "PSO.h"
 
 int main(void)
 {
 	//Declarar un Puntero a imagen
-	gcIMG *Img1;
 	unsigned int i,j;
-	unsigned int W,H;
-
-	Img1=gcGetImgBmp("imag_circle_8.bmp");
-
-	H=Img1->alto; //Obtener alto
-	W=Img1->ancho;//Obtener ancho
-	printf("\nalto\t%u",H);
-	printf("\nancho\t%u",W);
-	
-	//Barrer imagen buscando puntos negros
+	unsigned int width,height;
 	unsigned int k=0;
-	int vector[H*W];
-	for(i=0; i<H; i++)
+	gcIMG *Img1;
+	PIXEL *vector;
+
+	Img1=gcGetImgBmp("imag_circle_4.bmp");
+	height=Img1->alto;
+	width=Img1->ancho;
+
+	vector = (PIXEL*)malloc(height*width*sizeof(PIXEL));
+
+	//Barrer imagen buscando puntos negros
+	for(i=0; i<height; i++)
 	{
-		for(j=0;j<W; j++)
+		for(j=0;j<width; j++)
 		{
 			if(Img1->imx[i*Img1->ancho+j] == 0)
 			{
-				vector[k]=i*Img1->ancho+j;
-				//printf("\n\n%i",vector[k]);
+				vector[k].x = j;
+				vector[k].y = height-i;
+				printf("\n\nX=%d\ty=%d", vector[k].x, vector[k].y);
 				k++;
-				printf("\n\nX=%u\ty=%u",j,H-i);
 			}
-			//printf("\n\n%e",Img1->imx[i*Img1->ancho+j]);
 		}
 	}
 
 	//Libera la Imagen utilizada
+	free(vector);
 	gcFreeImg(Img1);
 	return 0;
 }

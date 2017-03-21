@@ -41,6 +41,11 @@ typedef struct
     PARTICLE* Swarm; //Apuntador a SWARM
 }SWARM;
 
+typedef struct {
+	unsigned int x;
+	unsigned int y;
+} PIXEL;
+
 SWARM *CreateSwarm(unsigned int nParticles, unsigned int nParams);
 void SetupSWARM(SWARM *pSwarm,const float lowLimit,const float highLimit,const float c1,const float c2,const float vmin,const float vmax);
 void ShowPARTICLE(SWARM *pSwarm, const int i);
