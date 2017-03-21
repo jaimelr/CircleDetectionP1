@@ -1,6 +1,6 @@
 #include "PSO.h"
 
-/* Asignación dinámica para SwarmAMBRE */
+/* Asignación dinámica para enjambre */
 SWARM* CreateSwarm(unsigned int nParticles, unsigned int nParams)
 {
 	unsigned int k;
@@ -50,14 +50,14 @@ void SetupSWARM(SWARM *pSwarm,const float lowLimit,const float highLimit,const f
 		for (k = 0; k < pSwarm->nParams; k++)
 		{
 			r = ((double)rand() / RAND_MAX)*(highLimit - lowLimit) + lowLimit;
-			pSwarm->Swarm[i].Xi[k] = r;
+			pSwarm->Swarm[i].Xi[k] = (int)r;
 			pSwarm->Swarm[i].Vi[k] = 0;
-			pSwarm->Swarm[i].Pi[k] = r;
+			pSwarm->Swarm[i].Pi[k] = (int)r;
 		}
 		pSwarm->c1 = c1;
 		pSwarm->c2 = c2;
-        pSwarm->Vmax=vmax;
-        pSwarm->Vmin=vmin;
+    pSwarm->Vmax=vmax;
+    pSwarm->Vmin=vmin;
 	}
 }
 
@@ -90,12 +90,12 @@ void ShowPARTICLE(SWARM *pSwarm, const int i)
 	for (k = 0; k < pSwarm->nParams; k++)
 		printf("%2.4f\t", pSwarm->Swarm[i].Vi[k]);
 
-	printf("\n P%u:\t", i);
+	/*printf("\n P%u:\t", i);
 	for (k = 0; k < pSwarm->nParams; k++)
 		printf("%2.4f\t", pSwarm->Swarm[i].Pi[k]);
 
 	printf("\n xFit = %f", pSwarm->Swarm[i].XFit);
-	printf("\n xPit = %f", pSwarm->Swarm[i].PFit);
+	printf("\n xPit = %f", pSwarm->Swarm[i].PFit);*/
 }
 
 void ShowSWARM(SWARM *pSwarm)

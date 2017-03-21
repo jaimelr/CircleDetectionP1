@@ -4,12 +4,12 @@
 
 int main(void)
 {
-	//Declarar un Puntero a imagen
 	unsigned int i,j;
 	unsigned int width,height;
 	unsigned int k=0;
 	gcIMG *img1;
 	VECTORS vector;
+	SWARM *swarm;
 
 	img1 = gcGetImgBmp("imag_circle_4.bmp");
 	height = img1->alto;
@@ -19,7 +19,13 @@ int main(void)
 
 	vector = GetColoredPixels(img1);
 
-	//Libera la Imagen utilizada
+	swarm = CreateSwarm(PARTICLES_NUMBER, PARAMS_NUMBER);
+	SetupSWARM(swarm, 0, vector.size, 2, 2, LOW_SPEED, HIGH_SPEED);
+	printf("%d\n", vector.size);
+	ShowSWARM(swarm);
+
+	free(vector.x);
+	free(vector.y);
 	gcFreeImg(img1);
 	return 0;
 }
