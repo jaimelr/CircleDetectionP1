@@ -5,13 +5,10 @@
 #include<stdlib.h>
 
 #define PARTICLES_NUMBER 30 // Este ejemplo en particular
-#define PARAMS_NUMBER 2 // Solo se necesitan dos valores para darle solucion al problema
-#define LOW_LIMIT 10.0
-#define HIGH_LIMIT 0.0
-#define ITERATION_LIMIT 300
+#define PARAMS_NUMBER 3 // Solo se necesitan dos valores para darle solucion al problema
+#define ITERATION_LIMIT 30
 #define LOW_SPEED -1.0
 #define HIGH_SPEED 1.0
-
 
 /* La PARTICLE debia estar dividida en tres partes ESTRUCTURA DE LA PARTICLE
 * 1.-posición
@@ -19,7 +16,7 @@
 * 3.-Mejor posición
 */
 
-/* Definición de la estructura SwarmAMBRE */
+/* Definición de la estructura Swarm */
 typedef struct
 {
 	float* Xi; // Posicion
@@ -27,7 +24,7 @@ typedef struct
 	float* Pi; // Mejor posicion
 	float XFit; // Posición fitness
 	float PFit; // Mejor posición fitness
-}PARTICLE;
+} PARTICLE;
 
 typedef struct
 {
@@ -37,9 +34,9 @@ typedef struct
 	float        c1; //Las constantes dan peso a la experiencia
 	float        c2; //indivudual o a la colectiva
 	float        Vmin;
-    float        Vmax;
-    PARTICLE* Swarm; //Apuntador a SWARM
-}SWARM;
+  float        Vmax;
+  PARTICLE* Swarm; //Apuntador a SWARM
+} SWARM;
 
 SWARM *CreateSwarm(unsigned int nParticles, unsigned int nParams);
 void SetupSWARM(SWARM *pSwarm,const float lowLimit,const float highLimit,const float c1,const float c2,const float vmin,const float vmax);
