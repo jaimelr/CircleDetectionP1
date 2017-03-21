@@ -23,7 +23,7 @@ int main(void)
 	//W=300;
 	//H=300;
 	//Abrir una imagen llamada Uno.bmp
-	Img1=gcGetImgBmp("Circulos.bmp");
+	Img1=gcGetImgBmp("imag_circle_4.bmp");
 	H=Img1->alto; //Obtener alto
 	W=Img1->ancho;//Obtener ancho
 	printf("\nalto\t%u",H);
