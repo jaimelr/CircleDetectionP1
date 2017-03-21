@@ -1,9 +1,3 @@
-/******************** Funcion Dos ***********************************
- Garcia Capulin Put Image Bmp
- gcPutImgBmp()
-  Funcion que envia a un archivo bmp una imagen en memoria.
-*/
-
 #include "PDI.h"
 
 /********************Funcion Uno ***********************************
@@ -29,7 +23,7 @@ gcIMG* gcGetImgBmp(char *ruta)
 		printf("Error al reservar memoria para gcIMG \n");
         exit (1);
     }
-	
+
 	fread(img->id,2,1,file);      // Lee 2 bytes del identificador
 	fseek(file,10,SEEK_SET);      // Se posiciona en Data offset
 	fread(&img->offset,2,1,file); // Lee el offset de la Imagen
@@ -41,21 +35,21 @@ gcIMG* gcGetImgBmp(char *ruta)
 	fread(&img->bpp,1,1,file);    // Lee los Bpp
 	fseek(file,34,SEEK_SET);      // Se posiciona en Size
 	fread(&img->size,4,1,file);   // Lee el tamaño de la Imagen */
-	
+
 	// Comprobar archivo valido
 	if((img->id[0]!='B')||(img->id[1]!='M') )
     {
 		printf("Archivo de Formato No Valido \n");
         exit (1);
     }
-	
+
 	// Asignar memoria para el encabezado
 	if((img->head = (unsigned char *) malloc(img->offset)) == NULL )
     {
 		printf("Error al reservar memoria para el encabezado \n");
 		exit (1);
     }
-	
+
 	// Asignar memoria para la imagen real
 	if((img->imx =(float *)calloc(img->ancho*img->alto,sizeof(float))) == NULL )
     {
@@ -66,7 +60,7 @@ gcIMG* gcGetImgBmp(char *ruta)
 	// Lectura del encabezado
 	rewind(file);
 	fread(img->head,1078,1,file);
-	
+
 	// Lectura de la imagen
 	a=img->ancho;
 	ar=img->size/img->alto;               //calcula el ancho real
@@ -92,10 +86,10 @@ void gcPutImgBmp(char *ruta, gcIMG *img)
 {
 	FILE *file;
 	int aux,zero=0,i,j,offset,Newancho;
-	
+
 	// Crear un Archivo nuevo
 	if((file = fopen(ruta,"w+b")) == NULL)
-	{ 
+	{
 		printf("\nError abriendo el archivo \n");
 		exit(1);
 	}
@@ -143,7 +137,7 @@ void gcPutImgBmp(char *ruta, gcIMG *img)
 		fwrite(&aux,4,1,file);              // Escirbe Colors used
 		aux=0;
 		fwrite(&aux,4,1,file);              // Escirbe Important Colors
-	
+
 		// Escritura de la paleta
 		for (aux=0; aux<256; aux++)
 		{
@@ -159,7 +153,7 @@ void gcPutImgBmp(char *ruta, gcIMG *img)
 		{
 			if(j>aux-1)
 				fputc(0,file);
-			else 
+			else
 				fputc((unsigned char)img->imx[i*aux+j],file);
 		}
 	fclose(file);
@@ -175,7 +169,7 @@ gcIMG *gcNewImg(int ancho,int alto)
 {
 	gcIMG *img;
 	//int i;
-	
+
 	if((img = (gcIMG *) calloc(1,sizeof(gcIMG))) == NULL)
 	{
 		printf("Error al reservar memoria para gcIMG\n");

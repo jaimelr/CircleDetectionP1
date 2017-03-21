@@ -19,10 +19,6 @@
 * 3.-Mejor posición
 */
 
-/* PROBLEMA DE EJEMPLO, FUNCION SIMPLE QUE SE MAXIMICE
-* f(x,y)=50-(x-5)^2-(y-5)^2
-*/
-
 /* Definición de la estructura SwarmAMBRE */
 typedef struct
 {
@@ -55,17 +51,5 @@ void SetupBest(SWARM *pSwarm);
 void UpdateSpeed(SWARM *pSwarm);
 void UpdatePosition(SWARM *pSwarm);
 void UpdateBest(SWARM *pSwarm);
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif //_PSO_H_
