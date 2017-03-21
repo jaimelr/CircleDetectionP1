@@ -9,7 +9,8 @@ int main(void)
 	unsigned int i,j;
 	unsigned int W,H;
 
-	Img1=gcGetImgBmp("imag_circle_4.bmp");
+	Img1=gcGetImgBmp("imag_circle_8.bmp");
+
 	H=Img1->alto; //Obtener alto
 	W=Img1->ancho;//Obtener ancho
 	printf("\nalto\t%u",H);
@@ -22,12 +23,12 @@ int main(void)
 	{
 		for(j=0;j<W; j++)
 		{
-			if(Img1->imx[i*Img1->ancho+j] <= 10)
+			if(Img1->imx[i*Img1->ancho+j] == 0)
 			{
 				vector[k]=i*Img1->ancho+j;
 				//printf("\n\n%i",vector[k]);
 				k++;
-				printf("\n\nX=%u\ty=%u",i,j);
+				printf("\n\nX=%u\ty=%u",j,H-i);
 			}
 			//printf("\n\n%e",Img1->imx[i*Img1->ancho+j]);
 		}
