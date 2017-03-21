@@ -2,3 +2,4 @@ main
 main.o
 PDI.o
 PSO.o
+circle.o
