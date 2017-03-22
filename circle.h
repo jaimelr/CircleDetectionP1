@@ -3,6 +3,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<math.h>
 #include "PDI.h"
 
 typedef struct {
@@ -15,6 +16,6 @@ VECTORS GetColoredPixels(gcIMG* img1);
 int VectorSize(VECTORS* vector);
 int CenterCoordinateX(VECTORS vector, int i, int j, int k);
 int CenterCoordinateY(VECTORS vector, int i, int j, int k);
-int CircleRadius(int x0, int y0, int x, int y);
+int CircleRadius(VECTORS vector, int centerX, int centerY, int i);
 
 #endif

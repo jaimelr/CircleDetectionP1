@@ -81,3 +81,14 @@ int CenterCoordinateY(VECTORS vector, int i, int j, int k) {
 
   return yCenter;
 }
+
+int CircleRadius(VECTORS vector, int centerX, int centerY, int i) {
+  int t1;
+  int x = vector.x[i];
+  int y = vector.y[i];
+  int radius;
+
+  t1 = (x-centerX)*(x-centerX) + (y-centerY)*(y-centerY);
+  radius = (int)sqrt(t1);
+  return radius;
+}
