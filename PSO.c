@@ -78,60 +78,17 @@ void SetupBest(SWARM *pSwarm)
 	}
 }
 
-void ShowPARTICLE(SWARM *pSwarm, const int i)
-{
-	unsigned int k;
-
-	printf("\n\n X%u:\t", i);
-	for (k = 0; k < pSwarm->nParams; k++)
-		printf("%2.4f\t", pSwarm->Swarm[i].Xi[k]);
-
-	printf("\n V%u:\t", i);
-	for (k = 0; k < pSwarm->nParams; k++)
-		printf("%2.4f\t", pSwarm->Swarm[i].Vi[k]);
-
-	/*printf("\n P%u:\t", i);
-	for (k = 0; k < pSwarm->nParams; k++)
-		printf("%2.4f\t", pSwarm->Swarm[i].Pi[k]);
-
-	printf("\n xFit = %f", pSwarm->Swarm[i].XFit);
-	printf("\n xPit = %f", pSwarm->Swarm[i].PFit);*/
-}
-
-void ShowSWARM(SWARM *pSwarm)
-{
-	unsigned int i;
-
-	for (i = 0; i < pSwarm->nParticles; i++)
-		ShowPARTICLE(pSwarm, i);
-}
-
-void FreeSWARM(SWARM *pSwarm)
-{
-	unsigned int k;
-
-	// Liberar memoria para todos los parametros de cada PARTICLE
-	for (k = 0; k < pSwarm->nParticles; k++)
-	{
-		free(pSwarm->Swarm[k].Xi);
-		free(pSwarm->Swarm[k].Vi);
-		free(pSwarm->Swarm[k].Pi);
-	}
-
-	// Liberar memoria de PARTICLEs
-	free(pSwarm->Swarm);
-	// Liberar memoria de SWARM
-	free(pSwarm);
-}
-
 void EvaluateSWARM(SWARM *pSwarm)
 {
-	unsigned int k;
+	unsigned int i;
+	unsigned int x;
+	unsigned int y;
 
 	// Evaluate cada PARTICLE
-	for (k = 0; k < pSwarm->nParticles; k++)
-		pSwarm->Swarm[k].XFit = 50 - ((pSwarm->Swarm[k].Xi[0] - 5)*(pSwarm->Swarm[k].Xi[0] - 5) +
-		(pSwarm->Swarm[k].Xi[1] - 5)*(pSwarm->Swarm[k].Xi[1] - 5));
+	for (i = 0; i < pSwarm->nParticles; i++) {
+
+	}
+
 }
 
 void UpdateSpeed(SWARM *pSwarm)
@@ -206,4 +163,51 @@ void UpdateBest(SWARM *pSwarm)
 			best = pSwarm->Swarm[i].PFit;
 		}
 	}
+}
+
+
+void ShowPARTICLE(SWARM *pSwarm, const int i)
+{
+	unsigned int k;
+
+	printf("\n\n X%u:\t", i);
+	for (k = 0; k < pSwarm->nParams; k++)
+		printf("%2.4f\t", pSwarm->Swarm[i].Xi[k]);
+
+	printf("\n V%u:\t", i);
+	for (k = 0; k < pSwarm->nParams; k++)
+		printf("%2.4f\t", pSwarm->Swarm[i].Vi[k]);
+
+	/*printf("\n P%u:\t", i);
+	for (k = 0; k < pSwarm->nParams; k++)
+		printf("%2.4f\t", pSwarm->Swarm[i].Pi[k]);
+
+	printf("\n xFit = %f", pSwarm->Swarm[i].XFit);
+	printf("\n xPit = %f", pSwarm->Swarm[i].PFit);*/
+}
+
+void ShowSWARM(SWARM *pSwarm)
+{
+	unsigned int i;
+
+	for (i = 0; i < pSwarm->nParticles; i++)
+		ShowPARTICLE(pSwarm, i);
+}
+
+void FreeSWARM(SWARM *pSwarm)
+{
+	unsigned int k;
+
+	// Liberar memoria para todos los parametros de cada PARTICLE
+	for (k = 0; k < pSwarm->nParticles; k++)
+	{
+		free(pSwarm->Swarm[k].Xi);
+		free(pSwarm->Swarm[k].Vi);
+		free(pSwarm->Swarm[k].Pi);
+	}
+
+	// Liberar memoria de PARTICLEs
+	free(pSwarm->Swarm);
+	// Liberar memoria de SWARM
+	free(pSwarm);
 }
