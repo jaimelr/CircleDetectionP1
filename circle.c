@@ -32,3 +32,52 @@ VECTORS GetColoredPixels(gcIMG* img1) {
 
   return vector;
 }
+
+int CenterCoordinateX(VECTORS vector, int i, int j, int k) {
+  int xi = vector.x[i];
+  int xj = vector.x[j];
+  int xk = vector.x[k];
+  int yi = vector.y[i];
+  int yj = vector.y[j];
+  int yk = vector.y[k];
+  int det;
+  int xCenter;
+  int t1, t2, t3, t4;
+
+  printf("\nCoordenadas de puntos X:\n");
+	printf("I: %d\n", vector.x[i]);
+	printf("J: %d\n", vector.x[j]);
+	printf("K: %d\n", vector.x[k]);
+
+  t1 = xj*xj + yj*yj-(xi*xi+yi*yi);
+  t2 = 2*(yj-yi);
+  t3 = xk*xk+yk*yk - (xi*xi+yi*yi);
+  t4 = 2*(yk-yi);
+
+  det = t1*t4 - t2*t3;
+  xCenter = det/(4*((xj-xi)*(yk-yi) - (xk-xi)*(yj-yi)));
+
+  return xCenter;
+}
+
+int CenterCoordinateY(VECTORS vector, int i, int j, int k) {
+  int xi = vector.x[i];
+  int xj = vector.x[j];
+  int xk = vector.x[k];
+  int yi = vector.y[i];
+  int yj = vector.y[j];
+  int yk = vector.y[k];
+  int det;
+  int yCenter;
+  int t1, t2, t3, t4;
+
+  t1 = 2*(xj-xi);
+  t2 = xj*xj + yj*yj - (xi*xi + yi*yi);
+  t3 = 2*(xk-xi);
+  t4 = xk*xk + yk*yk - (xi*xi + yi*yi);
+
+  det = t1*t4 - t2*t3;
+  yCenter = (int)(det/(4*((xj-xi)*(yk-yi) - (xk-xi)*(yj-yi))));
+
+  return yCenter;
+}
