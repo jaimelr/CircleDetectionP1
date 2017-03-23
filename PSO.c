@@ -78,17 +78,48 @@ void SetupBest(SWARM *pSwarm)
 	}
 }
 
-void EvaluateSWARM(SWARM *pSwarm)
+void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img)
 {
+	unsigned int index;
+	float ang;
+	float matchCircle;
 	unsigned int i;
+	unsigned int j;
+	unsigned int k;
 	unsigned int x;
 	unsigned int y;
+	unsigned int centerX;
+	unsigned int centerY;
+	unsigned int radius;
 
-	// Evaluate cada PARTICLE
-	for (i = 0; i < pSwarm->nParticles; i++) {
+	matchCircle = 0;
 
+	// Evaluate cada Partícula
+	for (index = 0; index < 1; index++) {
+		i = pSwarm->Swarm[index].Xi[0];
+		j = pSwarm->Swarm[index].Xi[1];
+		k = pSwarm->Swarm[index].Xi[2];
+
+		//centerX = CenterCoordinateX(vector, i, j, k);
+		//centerY = CenterCoordinateY(vector, i, j, k);
+		//radius = CircleRadius(vector, centerX, centerY, i);
+		radius = 200;
+		centerX = 400;
+		centerY = 400;
+
+		for(ang=0; ang < 360; ang += 0.001) {
+			x = (int)radius*cos(ang*(PI/180)) + centerX;
+			y = (int)radius*sin(ang*(PI/180)) + centerY;
+
+			if(img->imx[x*(img->ancho + y)] < 150)
+				matchCircle += 0.001;
+
+			//img->imx[x*(img->ancho + y)] = 255;
+
+		}
+		//gcPutImgBmp("prueba.bmp", img);
+		printf("MATCH: %f\n", matchCircle);
 	}
-
 }
 
 void UpdateSpeed(SWARM *pSwarm)

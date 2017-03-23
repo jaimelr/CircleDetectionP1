@@ -13,7 +13,7 @@ int main(void)
 	VECTORS vector;
 	SWARM *swarm;
 
-	img1 = gcGetImgBmp("imag_circle_4.bmp");
+	img1 = gcGetImgBmp("c2.bmp");
 	height = img1->alto;
 	width = img1->ancho;
 	vector.x = (int*)malloc(width*height*sizeof(int));
@@ -24,7 +24,7 @@ int main(void)
 	swarm = CreateSwarm(PARTICLES_NUMBER, PARAMS_NUMBER);
 	SetupSWARM(swarm, 0, vector.size, 2, 2, LOW_SPEED, HIGH_SPEED);
 	//ShowSWARM(swarm);
-	//EvaluateSWARM(swarm);
+	EvaluateSWARM(swarm, vector, img1);
 
 	centerX = CenterCoordinateX(vector, 23, 56, 98);
 	centerY = CenterCoordinateY(vector, 23, 56, 98);
