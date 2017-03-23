@@ -13,7 +13,8 @@ int main(void)
 	VECTORS vector;
 	SWARM *swarm;
 
-	img1 = gcGetImgBmp("c2.bmp");
+	img1 = gcGetImgBmp("c3.bmp");
+
 	height = img1->alto;
 	width = img1->ancho;
 	vector.x = (int*)malloc(width*height*sizeof(int));
@@ -26,19 +27,9 @@ int main(void)
 	//ShowSWARM(swarm);
 	EvaluateSWARM(swarm, vector, img1);
 
-	centerX = CenterCoordinateX(vector, 23, 56, 98);
-	centerY = CenterCoordinateY(vector, 23, 56, 98);
-	radius = CircleRadius(vector, centerX, centerY, 23);
-	printf("Coordenadas de puntos Y:\n");
-	printf("I: %d\n", vector.y[23]);
-	printf("J: %d\n", vector.y[56]);
-	printf("K: %d\n", vector.y[98]);
-	printf("Centro en X: %d\n", centerX);
-	printf("Centro en Y: %d\n", centerY);
-	printf("Radio: %d\n", radius);
-
 	free(vector.x);
 	free(vector.y);
+	gcPutImgBmp("Plox.bmp", img1);
 	gcFreeImg(img1);
 	return 0;
 }
