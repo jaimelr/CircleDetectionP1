@@ -44,11 +44,6 @@ float CenterCoordinateX(VECTORS vector, int i, int j, int k) {
   float xCenter;
   int t1, t2, t3, t4;
 
-  printf("\nCoordenadas de puntos X:\n");
-	printf("I: %d\n", vector.x[i]);
-	printf("J: %d\n", vector.x[j]);
-	printf("K: %d\n", vector.x[k]);
-
   t1 = xj*xj + yj*yj-(xi*xi+yi*yi);
   t2 = 2*(yj-yi);
   t3 = xk*xk+yk*yk - (xi*xi+yi*yi);

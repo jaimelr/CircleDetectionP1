@@ -6,11 +6,11 @@
 #include <math.h>
 #include"circle.h"
 #include "PDI.h"
-#define PARTICLES_NUMBER 30 // Este ejemplo en particular
+#define PARTICLES_NUMBER 10 // Este ejemplo en particular
 #define PARAMS_NUMBER 3 // Solo se necesitan dos valores para darle solucion al problema
-#define ITERATION_LIMIT 30
-#define LOW_SPEED -1.0
-#define HIGH_SPEED 1.0
+#define ITERATION_LIMIT 20
+#define LOW_SPEED -100.0
+#define HIGH_SPEED 100.0
 #define PI 3.14159
 
 /* La PARTICLE debia estar dividida en tres partes ESTRUCTURA DE LA PARTICLE
