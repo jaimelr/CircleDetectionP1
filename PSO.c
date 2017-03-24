@@ -105,7 +105,7 @@ void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img)
 		centerY = CenterCoordinateY(vector, i, j, k);
 		radius = CircleRadius(vector, centerX, centerY, i);
 
-		for(ang=0; ang < 360; ang += 0.001) {
+		for(ang=0; ang < 360; ang += 0.01) {
 			x = (int)radius*cos(ang*(PI/180)) + centerX;
 			y = (int)radius*sin(ang*(PI/180)) + centerY;
 
@@ -114,21 +114,21 @@ void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img)
 				break;
 			pixel = (int)img->imx[aux];
 
-			if(pixel == 0)
-				matchCircle += 0.001;
+			if(pixel < 100)
+				matchCircle += 0.01;
 
 		}
 		pSwarm->Swarm[index].XFit = matchCircle;
 	}
 }
 
-void UpdateSpeed(SWARM *pSwarm)
+void UpdateSpeed(SWARM *pSwarm, VECTORS vector)
 {
 	unsigned int i;
 	unsigned int j;
 	float y1;
 	float y2;
-    float aux;
+  float aux;
 
 	// Para todas las partículas
 	for (i = 0; i < pSwarm->nParticles; i++)
@@ -141,8 +141,9 @@ void UpdateSpeed(SWARM *pSwarm)
 			//pSwarm->Swarm[i].Vi[j] += (pSwarm->c1)*y1*(pSwarm->Swarm[i].Pi[j] - pSwarm->Swarm[i].Xi[j]) +
 			//			(pSwarm->c2)*y2*(pSwarm->Swarm[pSwarm->idGbest].Pi[j] - pSwarm->Swarm[i].Xi[j]);
             aux = pSwarm->Swarm[i].Vi[j] + (pSwarm->c1)*y1*(pSwarm->Swarm[i].Pi[j] - pSwarm->Swarm[i].Xi[j]) +
-						(pSwarm->c2)*y2*(pSwarm->Swarm[pSwarm->idGbest].Pi[j] - pSwarm->Swarm[i].Xi[j]);
-            if(aux>pSwarm->Vmax)
+									(pSwarm->c2)*y2*(pSwarm->Swarm[pSwarm->idGbest].Pi[j] - pSwarm->Swarm[i].Xi[j]);
+
+						if(aux>pSwarm->Vmax)
             {
                 pSwarm->Swarm[i].Vi[j] = pSwarm->Vmax;
             }
@@ -157,7 +158,7 @@ void UpdateSpeed(SWARM *pSwarm)
 	}
 }
 
-void UpdatePosition(SWARM *pSwarm)
+void UpdatePosition(SWARM *pSwarm, VECTORS vector)
 {
 	unsigned int i;
 	unsigned int j;
@@ -169,9 +170,9 @@ void UpdatePosition(SWARM *pSwarm)
 		// Para todos los parámetros
 		for (j = 0; j < pSwarm->nParams; j++)
 		{
-			aux = pSwarm->Swarm[i].Xi[j] + pSwarm->Swarm[i].Vi[j];
-			if(aux < 0) {
-				pSwarm->Swarm[i].Xi[j] += 0;
+			aux = (int)(pSwarm->Swarm[i].Xi[j] + pSwarm->Swarm[i].Vi[j]);
+			if(aux < 0 || aux > vector.size) {
+				pSwarm->Swarm[i].Xi[j] = 0;
 			}
 			else
 				pSwarm->Swarm[i].Xi[j] = aux;

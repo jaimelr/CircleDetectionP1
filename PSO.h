@@ -6,9 +6,9 @@
 #include <math.h>
 #include"circle.h"
 #include "PDI.h"
-#define PARTICLES_NUMBER 10 // Este ejemplo en particular
+#define PARTICLES_NUMBER 30 // Este ejemplo en particular
 #define PARAMS_NUMBER 3 // Solo se necesitan dos valores para darle solucion al problema
-#define ITERATION_LIMIT 20
+#define ITERATION_LIMIT 60
 #define LOW_SPEED -100.0
 #define HIGH_SPEED 100.0
 #define PI 3.14159
@@ -48,8 +48,8 @@ void ShowSWARM(SWARM *pSwarm);
 void FreeSWARM(SWARM *pSwarm);
 void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img);
 void SetupBest(SWARM *pSwarm);
-void UpdateSpeed(SWARM *pSwarm);
-void UpdatePosition(SWARM *pSwarm);
+void UpdateSpeed(SWARM *pSwarm, VECTORS vector);
+void UpdatePosition(SWARM *pSwarm, VECTORS vector);
 void UpdateBest(SWARM *pSwarm);
 
 #endif //_PSO_H_

@@ -19,10 +19,10 @@ VECTORS GetColoredPixels(gcIMG* img1) {
 	{
 		for(j=0;j<width; j++)
 		{
-			if(img1->imx[i*img1->ancho+j] == 0)
+			if(img1->imx[i*img1->ancho+j] < 100)
 			{
 				vector.x[k] = j;
-				vector.y[k] = height-i;
+				vector.y[k] = i;
 				//printf("\n\nX=%d\ty=%d", vector.x[k], vector.y[k]);
 				k++;
 			}
