@@ -78,30 +78,61 @@ void SetupBest(SWARM *pSwarm)
 	}
 }
 
-void EvaluateSWARM(SWARM *pSwarm)
+void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img)
 {
+	unsigned int index;
+	float ang;
+	float matchCircle;
 	unsigned int i;
+	unsigned int j;
+	unsigned int k;
 	unsigned int x;
 	unsigned int y;
+	float centerX;
+	float centerY;
+	float radius;
+	unsigned int pixel;
+	unsigned int aux;
 
-	// Evaluate cada PARTICLE
-	for (i = 0; i < pSwarm->nParticles; i++) {
+	// Evaluate cada Partícula
+	for (index = 0; index < pSwarm->nParticles; index++) {
+		matchCircle = 0;
+		i = pSwarm->Swarm[index].Xi[0];
+		j = pSwarm->Swarm[index].Xi[1];
+		k = pSwarm->Swarm[index].Xi[2];
 
+		centerX = CenterCoordinateX(vector, i, j, k);
+		centerY = CenterCoordinateY(vector, i, j, k);
+		radius = CircleRadius(vector, centerX, centerY, i);
+
+		for(ang=0; ang < 360; ang += 0.1) {
+			x = (int)radius*cos(ang*(PI/180)) + centerX;
+			y = (int)radius*sin(ang*(PI/180)) + centerY;
+
+			aux = x*img->ancho + y;
+			if(aux > img->ancho*img->alto)
+				break;
+			pixel = (int)img->imx[aux];
+
+			if(pixel != 255)
+				matchCircle += 0.1;
+		}
+		pSwarm->Swarm[index].XFit = matchCircle;
 	}
-
 }
 
-void UpdateSpeed(SWARM *pSwarm)
+void UpdateSpeed(SWARM *pSwarm, VECTORS vector)
 {
 	unsigned int i;
 	unsigned int j;
 	float y1;
 	float y2;
-    float aux;
+  float aux;
 
 	// Para todas las partículas
 	for (i = 0; i < pSwarm->nParticles; i++)
 	{
+		//srand(time(NULL));
 		// Para todos los parámetros
 		for (j = 0; j < pSwarm->nParams; j++)
 		{
@@ -110,25 +141,28 @@ void UpdateSpeed(SWARM *pSwarm)
 			//pSwarm->Swarm[i].Vi[j] += (pSwarm->c1)*y1*(pSwarm->Swarm[i].Pi[j] - pSwarm->Swarm[i].Xi[j]) +
 			//			(pSwarm->c2)*y2*(pSwarm->Swarm[pSwarm->idGbest].Pi[j] - pSwarm->Swarm[i].Xi[j]);
             aux = pSwarm->Swarm[i].Vi[j] + (pSwarm->c1)*y1*(pSwarm->Swarm[i].Pi[j] - pSwarm->Swarm[i].Xi[j]) +
-						(pSwarm->c2)*y2*(pSwarm->Swarm[pSwarm->idGbest].Pi[j] - pSwarm->Swarm[i].Xi[j]);
-            if(aux>pSwarm->Vmax)
+									(pSwarm->c2)*y2*(pSwarm->Swarm[pSwarm->idGbest].Pi[j] - pSwarm->Swarm[i].Xi[j]);
+
+						if(aux>pSwarm->Vmax)
             {
                 pSwarm->Swarm[i].Vi[j] = pSwarm->Vmax;
-                break;
             }
-            if(aux<pSwarm->Vmin)
+            else if(aux<pSwarm->Vmin)
             {
                 pSwarm->Swarm[i].Vi[j] = pSwarm->Vmin;
-                break;
             }
+						else {
+							pSwarm->Swarm[i].Vi[j] = aux;
+						}
 		}
 	}
 }
 
-void UpdatePosition(SWARM *pSwarm)
+void UpdatePosition(SWARM *pSwarm, VECTORS vector)
 {
 	unsigned int i;
 	unsigned int j;
+	unsigned int aux;
 
 	// Para todas las partículas
 	for (i = 0; i < pSwarm->nParticles; i++)
@@ -136,7 +170,12 @@ void UpdatePosition(SWARM *pSwarm)
 		// Para todos los parámetros
 		for (j = 0; j < pSwarm->nParams; j++)
 		{
-			pSwarm->Swarm[i].Xi[j] += pSwarm->Swarm[i].Vi[j];
+			aux = (int)(pSwarm->Swarm[i].Xi[j] + pSwarm->Swarm[i].Vi[j]);
+			if(aux < 0 || aux > vector.size) {
+				pSwarm->Swarm[i].Xi[j] = 0;
+			}
+			else
+				pSwarm->Swarm[i].Xi[j] = aux;
 		}
 	}
 }
@@ -178,12 +217,12 @@ void ShowPARTICLE(SWARM *pSwarm, const int i)
 	for (k = 0; k < pSwarm->nParams; k++)
 		printf("%2.4f\t", pSwarm->Swarm[i].Vi[k]);
 
-	/*printf("\n P%u:\t", i);
+	printf("\n P%u:\t", i);
 	for (k = 0; k < pSwarm->nParams; k++)
 		printf("%2.4f\t", pSwarm->Swarm[i].Pi[k]);
 
 	printf("\n xFit = %f", pSwarm->Swarm[i].XFit);
-	printf("\n xPit = %f", pSwarm->Swarm[i].PFit);*/
+	printf("\n xPit = %f", pSwarm->Swarm[i].PFit);
 }
 
 void ShowSWARM(SWARM *pSwarm)

@@ -19,11 +19,11 @@ VECTORS GetColoredPixels(gcIMG* img1) {
 	{
 		for(j=0;j<width; j++)
 		{
-			if(img1->imx[i*img1->ancho+j] == 0)
+			if(img1->imx[i*img1->ancho+j] != 255)
 			{
 				vector.x[k] = j;
-				vector.y[k] = height-i;
-				printf("\n\nX=%d\ty=%d", vector.x[k], vector.y[k]);
+				vector.y[k] = i;
+				//printf("\n\nX=%d\ty=%d", vector.x[k], vector.y[k]);
 				k++;
 			}
 		}
@@ -33,21 +33,16 @@ VECTORS GetColoredPixels(gcIMG* img1) {
   return vector;
 }
 
-int CenterCoordinateX(VECTORS vector, int i, int j, int k) {
+float CenterCoordinateX(VECTORS vector, int i, int j, int k) {
   int xi = vector.x[i];
   int xj = vector.x[j];
   int xk = vector.x[k];
   int yi = vector.y[i];
   int yj = vector.y[j];
   int yk = vector.y[k];
-  int det;
-  int xCenter;
+  float det;
+  float xCenter;
   int t1, t2, t3, t4;
-
-  printf("\nCoordenadas de puntos X:\n");
-	printf("I: %d\n", vector.x[i]);
-	printf("J: %d\n", vector.x[j]);
-	printf("K: %d\n", vector.x[k]);
 
   t1 = xj*xj + yj*yj-(xi*xi+yi*yi);
   t2 = 2*(yj-yi);
@@ -60,15 +55,15 @@ int CenterCoordinateX(VECTORS vector, int i, int j, int k) {
   return xCenter;
 }
 
-int CenterCoordinateY(VECTORS vector, int i, int j, int k) {
+float CenterCoordinateY(VECTORS vector, int i, int j, int k) {
   int xi = vector.x[i];
   int xj = vector.x[j];
   int xk = vector.x[k];
   int yi = vector.y[i];
   int yj = vector.y[j];
   int yk = vector.y[k];
-  int det;
-  int yCenter;
+  float det;
+  float yCenter;
   int t1, t2, t3, t4;
 
   t1 = 2*(xj-xi);
@@ -77,18 +72,18 @@ int CenterCoordinateY(VECTORS vector, int i, int j, int k) {
   t4 = xk*xk + yk*yk - (xi*xi + yi*yi);
 
   det = t1*t4 - t2*t3;
-  yCenter = (int)(det/(4*((xj-xi)*(yk-yi) - (xk-xi)*(yj-yi))));
+  yCenter = det/(4*((xj-xi)*(yk-yi) - (xk-xi)*(yj-yi)));
 
   return yCenter;
 }
 
-int CircleRadius(VECTORS vector, int centerX, int centerY, int i) {
+float CircleRadius(VECTORS vector, int centerX, int centerY, int i) {
   int t1;
   int x = vector.x[i];
   int y = vector.y[i];
-  int radius;
+  float radius;
 
   t1 = (x-centerX)*(x-centerX) + (y-centerY)*(y-centerY);
-  radius = (int)sqrt(t1);
+  radius = sqrt(t1);
   return radius;
 }

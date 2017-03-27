@@ -3,12 +3,17 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include <math.h>
+//#include <time.h>
+#include"circle.h"
+#include "PDI.h"
 
 #define PARTICLES_NUMBER 30 // Este ejemplo en particular
 #define PARAMS_NUMBER 3 // Solo se necesitan dos valores para darle solucion al problema
-#define ITERATION_LIMIT 30
-#define LOW_SPEED -1.0
-#define HIGH_SPEED 1.0
+#define ITERATION_LIMIT 50
+#define LOW_SPEED -100.0
+#define HIGH_SPEED 100.0
+#define PI 3.14159
 
 /* La PARTICLE debia estar dividida en tres partes ESTRUCTURA DE LA PARTICLE
 * 1.-posición
@@ -43,10 +48,10 @@ void SetupSWARM(SWARM *pSwarm,const float lowLimit,const float highLimit,const f
 void ShowPARTICLE(SWARM *pSwarm, const int i);
 void ShowSWARM(SWARM *pSwarm);
 void FreeSWARM(SWARM *pSwarm);
-void EvaluateSWARM(SWARM *pSwarm);
+void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img);
 void SetupBest(SWARM *pSwarm);
-void UpdateSpeed(SWARM *pSwarm);
-void UpdatePosition(SWARM *pSwarm);
+void UpdateSpeed(SWARM *pSwarm, VECTORS vector);
+void UpdatePosition(SWARM *pSwarm, VECTORS vector);
 void UpdateBest(SWARM *pSwarm);
 
 #endif //_PSO_H_

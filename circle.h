@@ -14,8 +14,8 @@ typedef struct {
 
 VECTORS GetColoredPixels(gcIMG* img1);
 int VectorSize(VECTORS* vector);
-int CenterCoordinateX(VECTORS vector, int i, int j, int k);
-int CenterCoordinateY(VECTORS vector, int i, int j, int k);
-int CircleRadius(VECTORS vector, int centerX, int centerY, int i);
+float CenterCoordinateX(VECTORS vector, int i, int j, int k);
+float CenterCoordinateY(VECTORS vector, int i, int j, int k);
+float CircleRadius(VECTORS vector, int centerX, int centerY, int i);
 
 #endif
