@@ -19,7 +19,7 @@ VECTORS GetColoredPixels(gcIMG* img1) {
 	{
 		for(j=0;j<width; j++)
 		{
-			if(img1->imx[i*img1->ancho+j] < 100)
+			if(img1->imx[i*img1->ancho+j] != 255)
 			{
 				vector.x[k] = j;
 				vector.y[k] = i;

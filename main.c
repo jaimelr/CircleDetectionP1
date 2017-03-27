@@ -1,7 +1,6 @@
 #include "PDI.h"
 #include "PSO.h"
 #include "circle.h"
-#include <time.h>
 
 int main(void)
 {
@@ -14,14 +13,18 @@ int main(void)
 	unsigned int j;
 	unsigned int k;
 	unsigned int iterator;
+	unsigned int x;
+	unsigned int y;
+	unsigned int aux;
+	unsigned int pixel;
 	gcIMG *img1;
 	VECTORS vector;
 	SWARM *swarm;
-	srand(time(NULL));
 
 	iterator = 0;
+	//srand(time(NULL));
 
-	img1 = gcGetImgBmp("c3.bmp");
+	img1 = gcGetImgBmp("Im0.bmp");
 
 	height = img1->alto;
 	width = img1->ancho;
@@ -36,7 +39,6 @@ int main(void)
 	EvaluateSWARM(swarm, vector, img1);
 	//ShowSWARM(swarm);
 	SetupBest(swarm);
-	//printf("\n Best = %u", swarm->idGbest);
 
 	while ((iterator < ITERATION_LIMIT) && (360 - swarm->Swarm[swarm->idGbest].PFit) > 1 ) {
 		UpdateSpeed(swarm, vector);
@@ -51,7 +53,7 @@ int main(void)
 	i = swarm->Swarm[swarm->idGbest].Xi[0];
 	j = swarm->Swarm[swarm->idGbest].Xi[1];
 	k = swarm->Swarm[swarm->idGbest].Xi[2];
-	printf("Índice: %d\n", i);
+
 	centerX = (int)CenterCoordinateX(vector, i, j, k);
 	centerY = (int)CenterCoordinateY(vector, i, j, k);
 	radius = (int)CircleRadius(vector, centerX, centerY, i);
@@ -59,6 +61,17 @@ int main(void)
 	printf("\n\nPFit: %f\n", swarm->Swarm[swarm->idGbest].PFit);
 	printf("\nCentro: (%d, %d)\n", centerX, centerY);
 	printf("Radio: %d\n", radius);
+
+	for(int ang=0; ang < 360; ang += 1) {
+		x = (int)radius*cos(ang*(PI/180)) + centerX;
+		y = (int)radius*sin(ang*(PI/180)) + centerY;
+
+		aux = x*img1->ancho + y;
+		pixel = (int)img1->imx[aux];
+		img1->imx[pixel] = 0;
+	}
+
+	gcPutImgBmp("result.bmp", img1);
 
 	free(vector.x);
 	free(vector.y);

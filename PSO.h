@@ -4,11 +4,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <math.h>
+//#include <time.h>
 #include"circle.h"
 #include "PDI.h"
+
 #define PARTICLES_NUMBER 30 // Este ejemplo en particular
 #define PARAMS_NUMBER 3 // Solo se necesitan dos valores para darle solucion al problema
-#define ITERATION_LIMIT 60
+#define ITERATION_LIMIT 50
 #define LOW_SPEED -100.0
 #define HIGH_SPEED 100.0
 #define PI 3.14159

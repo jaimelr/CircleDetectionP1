@@ -105,7 +105,7 @@ void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img)
 		centerY = CenterCoordinateY(vector, i, j, k);
 		radius = CircleRadius(vector, centerX, centerY, i);
 
-		for(ang=0; ang < 360; ang += 0.01) {
+		for(ang=0; ang < 360; ang += 0.1) {
 			x = (int)radius*cos(ang*(PI/180)) + centerX;
 			y = (int)radius*sin(ang*(PI/180)) + centerY;
 
@@ -114,9 +114,8 @@ void EvaluateSWARM(SWARM *pSwarm, VECTORS vector, gcIMG *img)
 				break;
 			pixel = (int)img->imx[aux];
 
-			if(pixel < 100)
-				matchCircle += 0.01;
-
+			if(pixel != 255)
+				matchCircle += 0.1;
 		}
 		pSwarm->Swarm[index].XFit = matchCircle;
 	}
@@ -133,6 +132,7 @@ void UpdateSpeed(SWARM *pSwarm, VECTORS vector)
 	// Para todas las partículas
 	for (i = 0; i < pSwarm->nParticles; i++)
 	{
+		//srand(time(NULL));
 		// Para todos los parámetros
 		for (j = 0; j < pSwarm->nParams; j++)
 		{
